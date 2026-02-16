@@ -224,18 +224,46 @@
             text-align: right;
         }
         
-        .audio-presente {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 15px;
-            padding: 20px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+.audio-presente {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 15px;
+    padding: 25px 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.audio-texto {
+    width: 100%;
+    text-align: center;
+}
+
+.audio-texto p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 5px 0;
+    color: white;
+    word-break: break-word;
+}
+
+.audio-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 25px;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    width: fit-content;
+    margin: 0 auto;
+}
         
         .audio-texto {
             flex: 1;
@@ -306,20 +334,25 @@
             margin-left: 10px;
         }
         
-        @media (max-width: 600px) {
-            .carta {
-                padding: 30px 20px;
-            }
-            
-            .audio-presente {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .celula {
-                font-size: 2.5rem;
-            }
-        }
+@media (max-width: 600px) {
+    .carta {
+        padding: 30px 20px;
+    }
+    
+    .audio-presente {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 15px;
+    }
+    
+    .audio-texto p {
+        font-size: 1.1rem;
+    }
+    
+    .celula {
+        font-size: 2.5rem;
+    }
+}
         
         .reiniciar-btn {
             background: #764ba2;
