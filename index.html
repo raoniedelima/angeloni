@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>VENCE ESSA BOMBA AI MLK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>vence ai mlk</title>
     <style>
         * {
             margin: 0;
@@ -33,7 +33,7 @@
             width: 100%;
         }
         
-        /* TELA DO JOGO DA VELHA */
+        /* TELA DO JOGO */
         .jogo-container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
@@ -59,6 +59,44 @@
             color: #666;
             margin-bottom: 15px;
             font-size: 1rem;
+        }
+        
+        /* SISTEMA DE VIDAS */
+        .vidas-container {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            padding: 15px;
+            border-radius: 60px;
+            margin: 10px 0 20px;
+            border: 2px solid white;
+            box-shadow: 0 5px 0 #c44545;
+        }
+        
+        .vidas-titulo {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+            margin-bottom: 5px;
+        }
+        
+        .vidas-icones {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 2rem;
+        }
+        
+        .vida {
+            opacity: 0.3;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+        }
+        
+        .vida.ativa {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.1);
+            text-shadow: 0 0 10px gold;
         }
         
         /* JOGO DA VELHA */
@@ -104,7 +142,7 @@
         .celula.o { color: #4facfe; }
         
         .status-jogo {
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin: 15px 0;
             padding: 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -199,7 +237,7 @@
             text-align: right;
         }
         
-        /* PLAYER DE ÁUDIO - AGORA TOTALMENTE CENTRALIZADO E RESPONSIVO */
+        /* PLAYER DE ÁUDIO */
         .audio-presente {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 25px;
@@ -225,8 +263,6 @@
             margin: 8px 0;
             color: white;
             word-wrap: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
         }
         
         .audio-texto p:first-child {
@@ -236,7 +272,6 @@
         
         .audio-texto p:last-child {
             font-size: 1.1rem;
-            line-height: 1.4;
             background: rgba(0, 0, 0, 0.2);
             padding: 8px 12px;
             border-radius: 50px;
@@ -259,20 +294,16 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
         
         .audio-player {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 15px;
             background: rgba(0, 0, 0, 0.3);
             padding: 15px 25px;
             border-radius: 60px;
             backdrop-filter: blur(10px);
-            width: fit-content;
-            min-width: 240px;
             border: 2px solid white;
         }
         
@@ -283,17 +314,10 @@
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-size: 2rem;
             color: #f5576c;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             flex-shrink: 0;
-        }
-        
-        .play-button:active {
-            transform: scale(0.95);
         }
         
         .play-button.playing {
@@ -306,7 +330,6 @@
             font-size: 1.1rem;
             font-family: monospace;
             font-weight: bold;
-            text-shadow: 1px 1px 2px black;
         }
         
         audio {
@@ -329,68 +352,9 @@
             display: block;
         }
         
-        .reiniciar-btn:active {
-            transform: scale(0.97);
-        }
-        
-        /* AJUSTES FINOS PARA CELULAR */
         @media (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-            
-            .jogo-container {
-                padding: 15px 10px;
-            }
-            
-            .titulo-jogo {
-                font-size: 1.5rem;
-            }
-            
-            .celula {
-                font-size: 2rem;
-            }
-            
-            .carta {
-                padding: 20px 15px;
-            }
-            
-            .carta p {
-                font-size: 0.95rem;
-            }
-            
-            .audio-presente {
-                padding: 20px 10px;
-            }
-            
-            .audio-texto p:first-child {
-                font-size: 1.1rem;
-            }
-            
-            .audio-texto p:last-child {
-                font-size: 0.95rem;
-                padding: 6px 10px;
-            }
-            
-            .play-button {
-                width: 55px;
-                height: 55px;
-                font-size: 1.8rem;
-            }
-            
-            .timer {
-                font-size: 1rem;
-            }
-            
-            .audio-player {
-                padding: 12px 20px;
-                min-width: 200px;
-            }
-            
-            .reiniciar-btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
+            body { padding: 5px; }
+            .vidas-icones { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -398,8 +362,19 @@
     <div class="container">
         <!-- TELA DO JOGO -->
         <div class="jogo-container" id="jogoContainer">
-            <h1 class="titulo-jogo">❌ JOGO DA VELHA ⭕</h1>
-            <p class="subtitulo">Ganhe do computador para ler a carta!</p>
+            <h1 class="titulo-jogo">DIDÁTICO NÉ?</h1>
+            <p class="subtitulo">por mais que voce tente, nao pode<br>
+            e não consegue vencer o pecado sozinho<b>
+                É Deus quem vem e te livra, te sustenta e te guia</b></p>
+            
+            <div class="vidas-container">
+                <div class="vidas-titulo">❤️ VIDAS</div>
+                <div class="vidas-icones" id="vidasIcones">
+                    <span class="vida ativa">❤️</span>
+                    <span class="vida ativa">❤️</span>
+                    <span class="vida ativa">❤️</span>
+                </div>
+            </div>
             
             <div class="jogo-velha-container">
                 <div class="tabuleiro" id="tabuleiro">
@@ -418,12 +393,6 @@
                 
                 <div class="controles">
                     <button class="btn-jogo" id="reiniciarJogoBtn">🔄 Recomeçar</button>
-                    <button class="btn-jogo primario" id="jogarComputadorBtn">🤖 Vs Computador</button>
-                </div>
-                
-                <div class="regras">
-                    <p>👉 Toque em qualquer célula para jogar</p>
-                    <p>🏆 Vença e ganhe a carta + presente</p>
                 </div>
             </div>
         </div>
@@ -445,12 +414,11 @@
                 <div class="assinatura">Até mais mon ami</div>
             </div>
             
-            <!-- PLAYER TOTALMENTE CENTRALIZADO -->
             <div class="audio-presente">
                 <div class="audio-texto">
                     <p>🎁 Aqui, outro pequeno presente</p>
                     <p><span class="badge">ouça tudo pra entender</span></p>
-                    <p>kkkkkkkkk</p>
+                    <p>kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
                 </div>
                 
                 <div class="audio-player-wrapper">
@@ -474,21 +442,36 @@
         const celulas = document.querySelectorAll('.celula');
         const statusJogo = document.getElementById('statusJogo');
         const reiniciarJogoBtn = document.getElementById('reiniciarJogoBtn');
-        const jogarComputadorBtn = document.getElementById('jogarComputadorBtn');
         const audio = document.getElementById('audioPlayer');
         const playButton = document.getElementById('playButton');
         const timer = document.getElementById('timer');
         
-        // Variáveis do jogo
+        // Sistema de vidas
+        let vidas = 3;
+        const vidasIcones = document.querySelectorAll('.vida');
+        
+        // Variáveis do jogo - SIMPLIFICADO
         let tabuleiro = ['', '', '', '', '', '', '', '', ''];
-        let jogadorAtual = 'X';
+        let vezDoJogador = true; // true = jogador, false = computador
         let jogoAtivo = true;
+        let computadorJogando = false; // IMPEDE MÚLTIPLAS JOGADAS
         
         const combinacoesVencedoras = [
             [0,1,2], [3,4,5], [6,7,8],
             [0,3,6], [1,4,7], [2,5,8],
             [0,4,8], [2,4,6]
         ];
+        
+        // Função para atualizar visual das vidas
+        function atualizarVidas() {
+            vidasIcones.forEach((vida, index) => {
+                if (index < vidas) {
+                    vida.classList.add('ativa');
+                } else {
+                    vida.classList.remove('ativa');
+                }
+            });
+        }
         
         // Áudio
         function formatTime(seconds) {
@@ -521,10 +504,9 @@
         audio.addEventListener('ended', () => {
             playButton.textContent = '▶';
             playButton.classList.remove('playing');
-            timer.textContent = `0:00 / ${formatTime(audio.duration)}`;
         });
         
-        // Jogo da Velha
+        // JOGO DA VELHA - CORRIGIDO
         function atualizarTabuleiro() {
             celulas.forEach((celula, index) => {
                 celula.textContent = tabuleiro[index];
@@ -548,9 +530,11 @@
         function fazerJogada(posicao) {
             if (!jogoAtivo || tabuleiro[posicao] !== '') return false;
             
-            tabuleiro[posicao] = jogadorAtual;
+            // Marca a posição
+            tabuleiro[posicao] = vezDoJogador ? 'X' : 'O';
             atualizarTabuleiro();
             
+            // Verifica resultado
             const vencedor = verificarVencedor();
             
             if (vencedor === 'X') {
@@ -558,67 +542,98 @@
                 jogoAtivo = false;
                 setTimeout(revelarCarta, 1000);
                 return true;
-            } else if (vencedor === 'O') {
+            } 
+            else if (vencedor === 'O') {
                 statusJogo.textContent = '😢 Computador venceu...';
                 jogoAtivo = false;
+                
+                vidas--;
+                atualizarVidas();
+                
+                if (vidas <= 0) {
+                    statusJogo.textContent = '💔 Acabaram as vidas! Recomeçando...';
+                    setTimeout(() => {
+                        reiniciarJogo();
+                        vidas = 3;
+                        atualizarVidas();
+                    }, 1500);
+                } else {
+                    statusJogo.textContent = `Perdeu uma vida! Restam: ${vidas}`;
+                    setTimeout(reiniciarJogo, 1500);
+                }
                 return true;
-            } else if (vencedor === 'empate') {
-                statusJogo.textContent = '⚖️ Empate!';
+            } 
+            else if (vencedor === 'empate') {
+                statusJogo.textContent = '⚖️ Empate! Recomeçando...';
                 jogoAtivo = false;
+                setTimeout(reiniciarJogo, 1500);
                 return true;
             }
             
-            jogadorAtual = 'O';
-            statusJogo.textContent = '🤖 Vez do PC...';
-            setTimeout(jogadaComputador, 500);
+            // Se não terminou, muda a vez
+            vezDoJogador = !vezDoJogador;
+            
+            if (!vezDoJogador && jogoAtivo && !computadorJogando) {
+                statusJogo.textContent = '🤖 Vez do computador...';
+                computadorJogando = true;
+                setTimeout(jogadaComputador, 800);
+            } else {
+                statusJogo.textContent = 'Sua vez! (❌)';
+            }
+            
             return true;
         }
         
+        // COMPUTADOR - JOGA APENAS UMA VEZ
         function jogadaComputador() {
-            if (!jogoAtivo || jogadorAtual !== 'O') return;
+            // SÓ EXECUTA SE FOR VEZ DO COMPUTADOR E O JOGO TIVER ATIVO
+            if (!jogoAtivo || vezDoJogador) {
+                computadorJogando = false;
+                return;
+            }
             
-            let vazias = tabuleiro.reduce((acc, cell, idx) => {
-                if (cell === '') acc.push(idx);
-                return acc;
-            }, []);
+            let vazias = [];
+            for (let i = 0; i < tabuleiro.length; i++) {
+                if (tabuleiro[i] === '') vazias.push(i);
+            }
             
-            if (vazias.length > 0) {
-                // Tenta vencer
-                for (let pos of vazias) {
-                    tabuleiro[pos] = 'O';
-                    if (verificarVencedor() === 'O') {
-                        tabuleiro[pos] = '';
-                        fazerJogada(pos);
-                        return;
-                    }
-                    tabuleiro[pos] = '';
-                }
-                
-                // Tenta bloquear
+            if (vazias.length === 0) {
+                computadorJogando = false;
+                return;
+            }
+            
+            // COMPUTADOR BEM SIMPLES - ESCOLHE ALEATÓRIO
+            // 90% de chance de escolher aleatório, 10% de tentar algo estratégico
+            let posicaoEscolhida;
+            
+            if (Math.random() < 0.1) { // 10% estratégico
+                // Tenta bloquear se o jogador está perto de vencer
                 for (let pos of vazias) {
                     tabuleiro[pos] = 'X';
                     if (verificarVencedor() === 'X') {
                         tabuleiro[pos] = '';
-                        fazerJogada(pos);
-                        return;
+                        posicaoEscolhida = pos;
+                        break;
                     }
                     tabuleiro[pos] = '';
                 }
-                
-                // Joga no centro ou aleatório
-                if (vazias.includes(4)) {
-                    fazerJogada(4);
-                } else {
-                    let random = vazias[Math.floor(Math.random() * vazias.length)];
-                    fazerJogada(random);
-                }
             }
+            
+            // Se não escolheu ainda, escolhe aleatório
+            if (posicaoEscolhida === undefined) {
+                posicaoEscolhida = vazias[Math.floor(Math.random() * vazias.length)];
+            }
+            
+            // FAZ UMA ÚNICA JOGADA
+            fazerJogada(posicaoEscolhida);
+            computadorJogando = false;
         }
         
         function reiniciarJogo() {
             tabuleiro = ['', '', '', '', '', '', '', '', ''];
-            jogadorAtual = 'X';
+            vezDoJogador = true;
             jogoAtivo = true;
+            computadorJogando = false;
             statusJogo.textContent = 'Sua vez! (❌)';
             atualizarTabuleiro();
         }
@@ -635,6 +650,8 @@
             cartaContainer.classList.remove('visible');
             jogoContainer.classList.remove('hidden');
             jogoContainer.style.opacity = '1';
+            vidas = 3;
+            atualizarVidas();
             reiniciarJogo();
             if (!audio.paused) {
                 audio.pause();
@@ -644,27 +661,34 @@
             }
         }
         
-        // Event listeners
+        // Event listeners - APENAS QUANDO FOR VEZ DO JOGADOR
         celulas.forEach(celula => {
             celula.addEventListener('click', () => {
-                if (jogadorAtual === 'X' && jogoAtivo) {
+                // SÓ DEIXA JOGAR SE FOR VEZ DO JOGADOR, JOGO ATIVO E COMPUTADOR NÃO ESTIVER JOGANDO
+                if (vezDoJogador && jogoAtivo && !computadorJogando) {
                     fazerJogada(celula.getAttribute('data-pos'));
                 }
             });
+            
             celula.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                if (jogadorAtual === 'X' && jogoAtivo) {
+                if (vezDoJogador && jogoAtivo && !computadorJogando) {
                     fazerJogada(celula.getAttribute('data-pos'));
                 }
             });
         });
         
-        reiniciarJogoBtn.addEventListener('click', reiniciarJogo);
-        jogarComputadorBtn.addEventListener('click', reiniciarJogo);
+        reiniciarJogoBtn.addEventListener('click', () => {
+            vidas = 3;
+            atualizarVidas();
+            reiniciarJogo();
+        });
+        
         document.getElementById('reiniciarBtn').addEventListener('click', reiniciarTudo);
         
         // Inicia
         reiniciarJogo();
+        atualizarVidas();
     </script>
 </body>
 </html>
