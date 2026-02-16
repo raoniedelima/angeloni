@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎮 Jogo da Velha - Desbloquear Carta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🎮 Jogo da Velha - Carta de Aniversário</title>
     <style>
         * {
             margin: 0;
@@ -13,6 +13,11 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
         body {
             font-family: 'Courier New', monospace;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,28 +25,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            transition: all 0.5s ease;
-        }
-        
-        body.carta-revelada {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 100%;
             width: 100%;
         }
         
-        /* Tela do Jogo */
+        /* TELA DO JOGO DA VELHA */
         .jogo-container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
-            padding: 30px 20px;
+            padding: 20px 15px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             text-align: center;
             border: 3px solid #ffd700;
-            transition: all 0.5s ease;
+            width: 100%;
         }
         
         .jogo-container.hidden {
@@ -49,35 +49,36 @@
         }
         
         .titulo-jogo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #764ba2;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 2px 2px 0 #ffd700;
         }
         
         .subtitulo {
             color: #666;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-size: 1rem;
         }
         
-        /* Jogo da Velha */
+        /* JOGO DA VELHA */
         .jogo-velha-container {
             background: #f0f0f0;
             border-radius: 20px;
-            padding: 20px;
-            margin: 10px 0;
+            padding: 15px;
             border: 2px dashed #764ba2;
+            width: 100%;
         }
         
         .tabuleiro {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            max-width: 300px;
-            margin: 20px auto;
+            gap: 8px;
+            max-width: 280px;
+            width: 100%;
+            margin: 10px auto;
             background: #764ba2;
-            padding: 10px;
+            padding: 8px;
             border-radius: 15px;
         }
         
@@ -88,31 +89,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 0 #4a2c6b;
-            transition: all 0.1s ease;
-            color: #333;
+            box-shadow: 0 4px 0 #4a2c6b;
         }
         
         .celula:active {
-            transform: translateY(5px);
+            transform: translateY(4px);
             box-shadow: 0 0 0 #4a2c6b;
         }
         
-        .celula.x {
-            color: #ff6b6b;
-        }
-        
-        .celula.o {
-            color: #4facfe;
-        }
+        .celula.x { color: #ff6b6b; }
+        .celula.o { color: #4facfe; }
         
         .status-jogo {
-            font-size: 1.2rem;
-            margin: 20px 0;
-            padding: 15px;
+            font-size: 1rem;
+            margin: 15px 0;
+            padding: 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50px;
             color: white;
@@ -122,27 +116,24 @@
         
         .controles {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
-            margin: 20px 0;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
         
         .btn-jogo {
             background: white;
             border: none;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
             border: 2px solid #764ba2;
             color: #764ba2;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-jogo:active {
-            transform: scale(0.95);
+            flex: 1;
+            min-width: 120px;
         }
         
         .btn-jogo.primario {
@@ -153,144 +144,141 @@
         
         .regras {
             background: #e0e0e0;
-            padding: 15px;
+            padding: 12px;
             border-radius: 15px;
-            margin: 20px 0 10px;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
-        .regras p {
-            margin: 5px 0;
-        }
-        
-        /* Carta (inicialmente escondida) */
+        /* CARTA */
         .carta-container {
             display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            width: 100%;
         }
         
         .carta-container.visible {
             display: block;
-            opacity: 1;
         }
         
         .carta {
             background: #fff9e6;
-            padding: 40px;
-            border-radius: 15px;
+            padding: 25px 20px;
+            border-radius: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
             border: 1px solid #e0d5b5;
             position: relative;
-            animation: surgir 0.8s ease;
-        }
-        
-        @keyframes surgir {
-            0% { transform: translateY(50px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            width: 100%;
         }
         
         .carta::before {
             content: "✉️";
             position: absolute;
-            top: -20px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 30px;
+            font-size: 25px;
             background: white;
-            padding: 10px 20px;
+            padding: 5px 20px;
             border-radius: 50px;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
         
         .carta p {
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.6;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             white-space: pre-line;
-        }
-        
-        .carta p:last-child {
-            margin-bottom: 0;
+            word-wrap: break-word;
         }
         
         .assinatura {
             font-family: 'Brush Script MT', cursive;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #764ba2;
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: right;
         }
         
-.audio-presente {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    border-radius: 15px;
-    padding: 25px 20px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-    text-align: center;
-}
-
-.audio-texto {
-    width: 100%;
-    text-align: center;
-}
-
-.audio-texto p {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin: 5px 0;
-    color: white;
-    word-break: break-word;
-}
-
-.audio-player {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 12px 25px;
-    border-radius: 50px;
-    backdrop-filter: blur(5px);
-    width: fit-content;
-    margin: 0 auto;
-}
+        /* PLAYER DE ÁUDIO - AGORA TOTALMENTE CENTRALIZADO E RESPONSIVO */
+        .audio-presente {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 25px;
+            padding: 25px 15px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            border: 2px solid #ffd700;
+        }
         
         .audio-texto {
-            flex: 1;
-            min-width: 250px;
+            width: 100%;
+            text-align: center;
         }
         
         .audio-texto p {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin: 0;
-            line-height: 1.4;
+            margin: 8px 0;
             color: white;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .audio-texto p:first-child {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .audio-texto p:last-child {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 50px;
+            display: inline-block;
+            max-width: 100%;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #2c3e50;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .audio-player-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .audio-player {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 60px;
+            backdrop-filter: blur(10px);
+            width: fit-content;
+            min-width: 240px;
+            border: 2px solid white;
         }
         
         .play-button {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: white;
             border: none;
             border-radius: 50%;
@@ -298,14 +286,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: #f5576c;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
         }
         
-        .play-button:hover {
-            transform: scale(1.1);
+        .play-button:active {
+            transform: scale(0.95);
         }
         
         .play-button.playing {
@@ -313,74 +301,107 @@
             color: white;
         }
         
+        .timer {
+            color: white;
+            font-size: 1.1rem;
+            font-family: monospace;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+        }
+        
         audio {
             display: none;
         }
-        
-        .timer {
-            color: white;
-            font-size: 0.9rem;
-            font-family: monospace;
-        }
-        
-        .badge {
-            display: inline-block;
-            background: #ffd700;
-            color: #2c3e50;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        
-@media (max-width: 600px) {
-    .carta {
-        padding: 30px 20px;
-    }
-    
-    .audio-presente {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px 15px;
-    }
-    
-    .audio-texto p {
-        font-size: 1.1rem;
-    }
-    
-    .celula {
-        font-size: 2.5rem;
-    }
-}
         
         .reiniciar-btn {
             background: #764ba2;
             color: white;
             border: none;
-            padding: 10px 30px;
+            padding: 15px 30px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            margin-top: 20px;
             font-weight: bold;
             border: 2px solid #ffd700;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+            display: block;
         }
         
         .reiniciar-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.97);
+        }
+        
+        /* AJUSTES FINOS PARA CELULAR */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .jogo-container {
+                padding: 15px 10px;
+            }
+            
+            .titulo-jogo {
+                font-size: 1.5rem;
+            }
+            
+            .celula {
+                font-size: 2rem;
+            }
+            
+            .carta {
+                padding: 20px 15px;
+            }
+            
+            .carta p {
+                font-size: 0.95rem;
+            }
+            
+            .audio-presente {
+                padding: 20px 10px;
+            }
+            
+            .audio-texto p:first-child {
+                font-size: 1.1rem;
+            }
+            
+            .audio-texto p:last-child {
+                font-size: 0.95rem;
+                padding: 6px 10px;
+            }
+            
+            .play-button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+            }
+            
+            .timer {
+                font-size: 1rem;
+            }
+            
+            .audio-player {
+                padding: 12px 20px;
+                min-width: 200px;
+            }
+            
+            .reiniciar-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- TELA DO JOGO DA VELHA -->
+        <!-- TELA DO JOGO -->
         <div class="jogo-container" id="jogoContainer">
             <h1 class="titulo-jogo">❌ JOGO DA VELHA ⭕</h1>
-            <p class="subtitulo">Ganhe uma partida para desbloquear a carta!</p>
+            <p class="subtitulo">Ganhe do computador para ler a carta!</p>
             
             <div class="jogo-velha-container">
-                <!-- Tabuleiro -->
                 <div class="tabuleiro" id="tabuleiro">
                     <div class="celula" data-pos="0"></div>
                     <div class="celula" data-pos="1"></div>
@@ -393,70 +414,52 @@
                     <div class="celula" data-pos="8"></div>
                 </div>
                 
-                <!-- Status do jogo -->
-                <div class="status-jogo" id="statusJogo">
-                    Sua vez! Clique em qualquer célula
-                </div>
+                <div class="status-jogo" id="statusJogo">Sua vez! (❌)</div>
                 
-                <!-- Controles -->
                 <div class="controles">
                     <button class="btn-jogo" id="reiniciarJogoBtn">🔄 Recomeçar</button>
-                    <button class="btn-jogo primario" id="jogarComputadorBtn">🤖 Jogar contra máquina</button>
+                    <button class="btn-jogo primario" id="jogarComputadorBtn">🤖 Vs Computador</button>
                 </div>
                 
-                <!-- Regras -->
                 <div class="regras">
-                    <p>🎮 <strong>Como jogar:</strong> Clique em qualquer célula para fazer sua jogada</p>
-                    <p>🏆 <strong>Objetivo:</strong> Vença o computador para liberar a carta!</p>
-                    <p>🤖 <strong>Dica:</strong> Você joga com ❌, o computador com ⭕</p>
+                    <p>👉 Toque em qualquer célula para jogar</p>
+                    <p>🏆 Vença e ganhe a carta + presente</p>
                 </div>
             </div>
         </div>
         
-        <!-- CARTA (inicialmente escondida) -->
+        <!-- CARTA -->
         <div class="carta-container" id="cartaContainer">
             <div class="carta">
                 <p>Hey little brother,</p>
-                
-                <p>Neste mesmo dia daqui três anos alguém vai dizer:<br>
-                "Cuidado, agora pode ir preso"<br>
-                E você vai poder olhar e dizer: "Só agora?", e o Breno e a Milena vão rir enquanto ninguém entende nada</p>
-                
+                <p>Neste mesmo dia daqui três anos alguém vai dizer:<br>"Cuidado, agora pode ir preso"<br>E você vai poder olhar e dizer: "Só agora?", e o Breno e a Milena vão rir enquanto ninguém entende nada</p>
                 <p>Feliz aniversário, zé. Foi muito bom ter te acompanhado esse tempo, desde aquele hambúrguer EXTREMAMENTE pequeno do Jerônimo até aquela noite kkkkkk que eu não sabia que tu tava doente, e a gente foi no GP e tu tava mais ranhento que sei lá o que</p>
-                
                 <p>Enfim, foi massa ver o seu crescimento nesse período. Eu e a sua família sabemos que você é muito mais do que aquele episódio na escola, e espero que você se atente a isso</p>
-                
                 <p>Por mais confuso que pareça às vezes, confie no seu pai. É algo que talvez você só entenda depois, mas ele sempre vai querer o seu bem</p>
-                
                 <p>Lembra também do que falamos sobre batismo e espírito santo. Essas coisas são ainda mais importantes, você deve se lembrar - e pra isso, leia a Bíblia, mas também se batize se entende, e se batize se você crê</p>
-                
                 <p>Uma vez que você tenha crido e sido batizado, você vai ter algumas boas dificuldades. Você pode sempre contar comigo, mas também com pessoas muito melhores, como Dani, o Gustavo, o Carlos... De mulheres só a Milena e a Stefany e a Yás e a Júlia (esposa do Gustavo), o resto eu não coloco a mão no fogo não (brincadeira)</p>
-                
                 <p>Enfim. Já falei demais. Amo você e amo sua vida. Sempre que possível, estarei aqui. Tente não ser crazy. Procure sempre a pacificação em meio aos conflitos. Fique longe dos mlks que são mau influência. Se atente sempre a como seus amigos falam de outros amigos deles. Se falarem mal, eles também falarão de você. Se contam os segredos de outras pessoas, eles também contarão os teus segredos p/ outras</p>
-                
                 <p>Não há nada de especial em seguir o caminho oposto ao que os homens da sua casa seguiram. A única coisa que você, já por experiência, percebe que tem um retorno digno e honesto, é o puro e simples trabalho e estudo</p>
-                
                 <p>Fique longe, longe, longe do resto. Eu sei que você consegue - e você sabe que eu sei que você sabe que eu sei e eu sei que tu sabendo que eu sei sabe o que eu sei etc etc blz parei. Você é amado, você é esperto, mas também queira ser sábio</p>
-                
                 <p>Até mais mon ami, espero que tenha aproveitado</p>
-                
-                <div class="assinatura">
-                    Até mais mon ami
-                </div>
+                <div class="assinatura">Até mais mon ami</div>
             </div>
             
+            <!-- PLAYER TOTALMENTE CENTRALIZADO -->
             <div class="audio-presente">
                 <div class="audio-texto">
-                    <p>🎁 <strong>Aqui, outro pequeno presente</strong> <span class="badge">ouça tudo pra entender</span></p>
-                    <p style="font-size: 1.3rem; margin-top: 5px;">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</p>
+                    <p>🎁 Aqui, outro pequeno presente</p>
+                    <p><span class="badge">ouça tudo pra entender</span></p>
+                    <p>kkkkkkkkk</p>
                 </div>
                 
-                <div class="audio-player">
-                    <button class="play-button" id="playButton">▶</button>
-                    <span class="timer" id="timer">0:00 / 0:00</span>
+                <div class="audio-player-wrapper">
+                    <div class="audio-player">
+                        <button class="play-button" id="playButton">▶</button>
+                        <span class="timer" id="timer">0:00 / 0:00</span>
+                    </div>
                 </div>
                 
-                <!-- IMPORTANTE: Coloque seu arquivo de áudio na mesma pasta com o nome "presente.mp3" -->
                 <audio id="audioPlayer" src="presente.mp3"></audio>
             </div>
             
@@ -465,33 +468,29 @@
     </div>
 
     <script>
-        // Elementos do jogo
+        // Elementos
         const jogoContainer = document.getElementById('jogoContainer');
         const cartaContainer = document.getElementById('cartaContainer');
         const celulas = document.querySelectorAll('.celula');
         const statusJogo = document.getElementById('statusJogo');
         const reiniciarJogoBtn = document.getElementById('reiniciarJogoBtn');
         const jogarComputadorBtn = document.getElementById('jogarComputadorBtn');
-        
-        // Elementos do áudio
         const audio = document.getElementById('audioPlayer');
         const playButton = document.getElementById('playButton');
         const timer = document.getElementById('timer');
         
         // Variáveis do jogo
         let tabuleiro = ['', '', '', '', '', '', '', '', ''];
-        let jogadorAtual = 'X'; // X é o jogador, O é o computador
+        let jogadorAtual = 'X';
         let jogoAtivo = true;
-        let contraComputador = true;
         
-        // Combinações vencedoras
         const combinacoesVencedoras = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Linhas
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colunas
-            [0, 4, 8], [2, 4, 6] // Diagonais
+            [0,1,2], [3,4,5], [6,7,8],
+            [0,3,6], [1,4,7], [2,5,8],
+            [0,4,8], [2,4,6]
         ];
         
-        // Formata o tempo do áudio
+        // Áudio
         function formatTime(seconds) {
             if (isNaN(seconds)) return '0:00';
             const mins = Math.floor(seconds / 60);
@@ -499,11 +498,8 @@
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
         
-        // Atualiza o timer do áudio
         audio.addEventListener('timeupdate', () => {
-            const current = formatTime(audio.currentTime);
-            const duration = formatTime(audio.duration);
-            timer.textContent = `${current} / ${duration}`;
+            timer.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
         });
         
         audio.addEventListener('loadedmetadata', () => {
@@ -528,26 +524,19 @@
             timer.textContent = `0:00 / ${formatTime(audio.duration)}`;
         });
         
-        // Função para atualizar o tabuleiro na interface
+        // Jogo da Velha
         function atualizarTabuleiro() {
             celulas.forEach((celula, index) => {
                 celula.textContent = tabuleiro[index];
-                if (tabuleiro[index] === 'X') {
-                    celula.classList.add('x');
-                    celula.classList.remove('o');
-                } else if (tabuleiro[index] === 'O') {
-                    celula.classList.add('o');
-                    celula.classList.remove('x');
-                } else {
-                    celula.classList.remove('x', 'o');
-                }
+                celula.className = 'celula';
+                if (tabuleiro[index] === 'X') celula.classList.add('x');
+                if (tabuleiro[index] === 'O') celula.classList.add('o');
             });
         }
         
-        // Função para verificar vencedor
         function verificarVencedor() {
-            for (let combinacao of combinacoesVencedoras) {
-                const [a, b, c] = combinacao;
+            for (let combo of combinacoesVencedoras) {
+                const [a,b,c] = combo;
                 if (tabuleiro[a] && tabuleiro[a] === tabuleiro[b] && tabuleiro[a] === tabuleiro[c]) {
                     return tabuleiro[a];
                 }
@@ -556,7 +545,6 @@
             return null;
         }
         
-        // Função para fazer jogada
         function fazerJogada(posicao) {
             if (!jogoAtivo || tabuleiro[posicao] !== '') return false;
             
@@ -566,46 +554,37 @@
             const vencedor = verificarVencedor();
             
             if (vencedor === 'X') {
-                statusJogo.textContent = '🎉 PARABÉNS! Você venceu! A carta será revelada!';
+                statusJogo.textContent = '🎉 VOCÊ VENCEU!';
                 jogoAtivo = false;
-                setTimeout(revelarCarta, 1500);
+                setTimeout(revelarCarta, 1000);
                 return true;
             } else if (vencedor === 'O') {
-                statusJogo.textContent = '😢 O computador venceu... Tente novamente!';
+                statusJogo.textContent = '😢 Computador venceu...';
                 jogoAtivo = false;
                 return true;
             } else if (vencedor === 'empate') {
-                statusJogo.textContent = '⚖️ Empate! Clique em "Recomeçar" para tentar novamente';
+                statusJogo.textContent = '⚖️ Empate!';
                 jogoAtivo = false;
                 return true;
             }
             
-            // Mudar jogador
-            jogadorAtual = jogadorAtual === 'X' ? 'O' : 'X';
-            
-            if (jogadorAtual === 'O' && jogoAtivo && contraComputador) {
-                statusJogo.textContent = '🤖 Vez do computador...';
-                setTimeout(jogadaComputador, 600);
-            } else {
-                statusJogo.textContent = 'Sua vez! (❌)';
-            }
-            
+            jogadorAtual = 'O';
+            statusJogo.textContent = '🤖 Vez do PC...';
+            setTimeout(jogadaComputador, 500);
             return true;
         }
         
-        // Função para jogada do computador
         function jogadaComputador() {
             if (!jogoAtivo || jogadorAtual !== 'O') return;
             
-            // Estratégia simples do computador
-            let posicoesVazias = tabuleiro.reduce((acc, celula, index) => {
-                if (celula === '') acc.push(index);
+            let vazias = tabuleiro.reduce((acc, cell, idx) => {
+                if (cell === '') acc.push(idx);
                 return acc;
             }, []);
             
-            if (posicoesVazias.length > 0) {
+            if (vazias.length > 0) {
                 // Tenta vencer
-                for (let pos of posicoesVazias) {
+                for (let pos of vazias) {
                     tabuleiro[pos] = 'O';
                     if (verificarVencedor() === 'O') {
                         tabuleiro[pos] = '';
@@ -615,8 +594,8 @@
                     tabuleiro[pos] = '';
                 }
                 
-                // Tenta bloquear o jogador
-                for (let pos of posicoesVazias) {
+                // Tenta bloquear
+                for (let pos of vazias) {
                     tabuleiro[pos] = 'X';
                     if (verificarVencedor() === 'X') {
                         tabuleiro[pos] = '';
@@ -626,53 +605,37 @@
                     tabuleiro[pos] = '';
                 }
                 
-                // Joga no centro se disponível
-                if (posicoesVazias.includes(4)) {
+                // Joga no centro ou aleatório
+                if (vazias.includes(4)) {
                     fazerJogada(4);
-                    return;
+                } else {
+                    let random = vazias[Math.floor(Math.random() * vazias.length)];
+                    fazerJogada(random);
                 }
-                
-                // Joga em posição aleatória
-                const posRandom = posicoesVazias[Math.floor(Math.random() * posicoesVazias.length)];
-                fazerJogada(posRandom);
             }
         }
         
-        // Função para reiniciar o jogo
         function reiniciarJogo() {
             tabuleiro = ['', '', '', '', '', '', '', '', ''];
             jogadorAtual = 'X';
             jogoAtivo = true;
-            statusJogo.textContent = 'Sua vez! Clique em qualquer célula';
+            statusJogo.textContent = 'Sua vez! (❌)';
             atualizarTabuleiro();
         }
         
-        // Função para revelar a carta
         function revelarCarta() {
             jogoContainer.style.opacity = '0';
-            
             setTimeout(() => {
                 jogoContainer.classList.add('hidden');
                 cartaContainer.classList.add('visible');
-                document.body.classList.add('carta-revelada');
-                
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: document.body.scrollHeight,
-                        behavior: 'smooth'
-                    });
-                }, 300);
-            }, 500);
+            }, 300);
         }
         
-        // Função para reiniciar tudo
-        function reiniciarJogoCompleto() {
+        function reiniciarTudo() {
             cartaContainer.classList.remove('visible');
             jogoContainer.classList.remove('hidden');
             jogoContainer.style.opacity = '1';
             reiniciarJogo();
-            
-            // Pausa o áudio se estiver tocando
             if (!audio.paused) {
                 audio.pause();
                 audio.currentTime = 0;
@@ -681,36 +644,26 @@
             }
         }
         
-        // Event listeners para as células
+        // Event listeners
         celulas.forEach(celula => {
             celula.addEventListener('click', () => {
                 if (jogadorAtual === 'X' && jogoAtivo) {
-                    const posicao = celula.getAttribute('data-pos');
-                    fazerJogada(posicao);
+                    fazerJogada(celula.getAttribute('data-pos'));
                 }
             });
-            
             celula.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 if (jogadorAtual === 'X' && jogoAtivo) {
-                    const posicao = celula.getAttribute('data-pos');
-                    fazerJogada(posicao);
+                    fazerJogada(celula.getAttribute('data-pos'));
                 }
             });
         });
         
-        // Botões
         reiniciarJogoBtn.addEventListener('click', reiniciarJogo);
+        jogarComputadorBtn.addEventListener('click', reiniciarJogo);
+        document.getElementById('reiniciarBtn').addEventListener('click', reiniciarTudo);
         
-        jogarComputadorBtn.addEventListener('click', () => {
-            contraComputador = true;
-            reiniciarJogo();
-            statusJogo.textContent = 'Sua vez! (❌)';
-        });
-        
-        document.getElementById('reiniciarBtn').addEventListener('click', reiniciarJogoCompleto);
-        
-        // Inicializa o jogo
+        // Inicia
         reiniciarJogo();
     </script>
 </body>
